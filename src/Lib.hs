@@ -1,24 +1,18 @@
 module Lib
-    ( randomRExcept
-    , shuffle
-    ) where
+  ( randomRExcept,
+    shuffle,
+  )
+where
 
-import System.Random
 import qualified Data.List as List
+import System.Random
 
-randomRExcept :: RandomGen g => (Int, Int) -> [Int] -> g -> Int --(Int, g)
+randomRExcept :: (RandomGen g) => (Int, Int) -> [Int] -> g -> Int
 randomRExcept (lo, hi) except gen =
-    filter (`notElem` except) (randomRs (lo, hi) gen) !! 0
+  head $ filter (`notElem` except) (randomRs (lo, hi) gen)
 
-shuffle :: RandomGen g => [a] -> g -> [a] --([a], g)
+shuffle :: (RandomGen g) => [a] -> g -> [a]
 shuffle xs g =
-    let xos = zip xs (randoms g :: [Int])
-        sorted = List.sortBy (\(_, a) (_, b) -> compare a b) xos
-    in map fst sorted
-
-{-
-shuffle' :: [Int] -> [a] -> [a]
-shuffle' (rand:rands) xs =
-    let (firsts, rest) = splitAt (rand `mod` length xs) xs
-    in (head rest) : shuffle' rands (firsts ++ tail rest)
--}
+  let xos = zip xs (randoms g :: [Int])
+      sorted = List.sortBy (\(_, a) (_, b) -> compare a b) xos
+   in map fst sorted

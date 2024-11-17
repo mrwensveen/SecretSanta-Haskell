@@ -5,7 +5,7 @@ import System.Random
 
 main :: IO ()
 main = do
-    gen <- getStdGen
-    let users = ["Alice", "Bob", "Zeke", "Mariah", "Jim", "Sue", "Cathy", "Tom"]
-    putStrLn $ show (shuffle users gen)
---    putStrLn $ show (randomRExcept (1, 8) [7] gen)
+  gen <- getStdGen
+  let users = ["Alice", "Bob", "Zeke", "Mariah", "Jim", "Sue", "Cathy", "Tom"]
+      shuffled = shuffle users gen
+  print shuffled
