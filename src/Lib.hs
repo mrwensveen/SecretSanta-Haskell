@@ -16,15 +16,14 @@ shuffle xs g =
 
 randomChunks :: (RandomGen g) => [a] -> g -> [[a]]
 randomChunks [] _ = []
-randomChunks xs gen =
-  let l = length xs
-   in if l <= 3
-        then [xs]
-        else
-          let (gen1, gen2) = split gen
-              i = randomRExcept (2, l) [l - 1] gen1
-              (chunk, rest) = List.splitAt i xs
-           in chunk : randomChunks rest gen2
+randomChunks xs gen
+  | length' <= 3 = [xs]
+  | otherwise = chunk : randomChunks rest gen2
+  where
+    length' = length xs
+    (gen1, gen2) = split gen
+    i = randomRExcept (2, length') [length' - 1] gen1
+    (chunk, rest) = List.splitAt i xs
 
 randomRExcept :: (RandomGen g) => (Int, Int) -> [Int] -> g -> Int
 randomRExcept (lo, hi) except gen =
